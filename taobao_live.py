@@ -322,7 +322,6 @@ class taobaoLive:
                 # width, height = map(int, image_object["pix"].split('x'))
                 # await self.send_msg(websocket, cid, send_user_id, f"cntaobao{self.nk}", make_image(image_object["fileId"], image_object["url"], image_object["size"], width, height))
             except Exception as e:
-                print(e)
                 pass
 
 
