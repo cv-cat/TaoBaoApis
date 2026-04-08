@@ -151,3 +151,23 @@ async def handle_message(self, message, websocket):
   <img src="https://github.com/cv-cat/Spider_XHS/blob/master/author/wx_pay.png" width="380px" alt="微信赞赏码">
   <img src="https://github.com/cv-cat/Spider_XHS/blob/master/author/zfb_pay.jpg" width="380px" alt="支付宝收款码">
 </div>
+
+---
+
+## Star 趋势
+
+<a href="https://www.star-history.com/#cv-cat/TaoBaoApis&Date">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/svg?repos=cv-cat/TaoBaoApis&type=Date&theme=dark" />
+    <source media="(prefers-color-scheme: light)" srcset="https://api.star-history.com/svg?repos=cv-cat/TaoBaoApis&type=Date" />
+    <img alt="Star History Chart" src="https://api.star-history.com/svg?repos=cv-cat/TaoBaoApis&type=Date" />
+  </picture>
+</a>
+
+
+## 🍔 交流群
+如果你对爬虫和ai agent感兴趣，请加作者主页wx通过邀请加入群聊
+
+ps: 群123已超过wx限制人数500，请加群4
+
+![06f69d67ff814b84e122bb32d123075b](https://github.com/cv-cat/Spider_XHS/blob/master/author/group4_2026_04_08)
