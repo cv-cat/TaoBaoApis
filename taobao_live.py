@@ -237,34 +237,6 @@ class taobaoLive:
         logger.info('init')
 
 
-    async def send_msg_once(self, goods_url, send_message: Message):
-        headers = {
-            "Cookie": get_session_cookies_str(self.taobao.session),
-            "Host": "wss-cntaobao.dingtalk.com",
-            "Connection": "Upgrade",
-            "Pragma": "no-cache",
-            "Cache-Control": "no-cache",
-            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Safari/537.36",
-            "Origin": "https://www.cntaobao.com",
-            "Accept-Encoding": "gzip, deflate, br, zstd",
-            "Accept-Language": "zh-CN,zh;q=0.9",
-        }
-        async with websockets.connect(self.base_url, extra_headers=headers) as websocket:
-            await self.init(websocket)
-            user_info = self.taobao.get_goods_uid_encrypt_uid(goods_url)
-            await self.create_chat(websocket, user_info["encrypt_uid"])
-            async for message in websocket:
-                try:
-                    logger.info(f"message: {message}")
-                    message = json.loads(message)
-                    cid = message["body"]["singleChatConversation"]["cid"]
-                    sender_nick = f"cntaobao{self.nk}"
-                    await self.send_msg(websocket, cid, user_info["uid"], sender_nick, send_message)
-                    logger.info('send message')
-                    return
-                except Exception as e:
-                    pass
-
     async def heart_beat(self, ws):
         while True:
             msg = {
@@ -357,16 +329,6 @@ class taobaoLive:
 if __name__ == '__main__':
     cookies_str = r''
     taobaoLive = taobaoLive(cookies_str)
-
-    # 1 主动发送一次消息
-    goods_url = r'https://detail.tmall.com/item.htm?ali_refid=a3_420860_1007%3A9955565344%3AH%3A9955565344_0_24706266476%3A0537034b9833330dbc6d6c6d672c0f6e&ali_trackid=319_0537034b9833330dbc6d6c6d672c0f6e&id=1028024721407&item_type=ad&mi_id=00000ScrWhEvDKasCklVJtX2reM4QjqBlOTsunXkqI0nLng&mm_sceneid=0_0_9955565344_0&spm=tbpc.pc_sem_alimama%2Fa.201876.d94'
-    # choice 1
-    # asyncio.run(taobaoLive.send_msg_once(goods_url, make_text('Hello, this is an active message!')))
-    # choice 2
-    # res_json = taobaoLive.taobao.upload_media(r"D:\Desktop\12345.jpg")
-    # image_object = res_json["object"]
-    # width, height = map(int, image_object["pix"].split('x'))
-    # asyncio.run(taobaoLive.send_msg_once(goods_url, make_image(image_object["fileId"], image_object["url"], image_object["size"], width, height)))
 
     # 2 获取全部聊天记录
     # cid = '3888777108.1-2221755722770.1#11001'
