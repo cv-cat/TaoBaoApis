@@ -319,7 +319,6 @@ class taobaoLive:
 
     async def handle_message(self, message, websocket):
         try:
-            print(message)
             data = message["body"]["syncPushPackage"]["data"][0]["data"]
             data = json.loads(data)
             logger.info(f"无需解密 message: {data}")
@@ -327,11 +326,15 @@ class taobaoLive:
             try:
                 data = decrypt(data)
                 message = json.loads(data)
-                logger.info(f"解密的 message: {message}")
 
-                send_user_name = message["1"]["10"]["reminderTitle"]
-                send_user_id = message["1"]["10"]["senderUserId"]
-                send_message = message["1"]["10"]["reminderContent"]
+                send_user_name = message["1"]["10"]["sender_nick"]
+                send_user_id = message["1"]["1"]["1"].split('@')[0]
+                send_message = message["1"]["6"]["2"]["1"]
+
+                if send_user_name == f"cntaobao{self.nk}":
+                    logger.info(f"这是自己发的消息，忽略 message: {message}")
+                    return
+
                 logger.info(f"user: {send_user_name}, 发送给我的信息 message: {send_message}")
 
                 cid = message["1"]["2"]
@@ -339,7 +342,8 @@ class taobaoLive:
                 # 回复文字
                 # reply = f'Hello, {send_user_name}! I am a robot. I am not available now. I will reply to you later.'
                 reply = f'{send_user_name} 说了: {send_message}'
-                await self.send_msg(websocket, cid, send_user_id, make_text(reply))
+
+                await self.send_msg(websocket, cid, send_user_id, f"cntaobao{self.nk}",  make_text(reply))
 
                 # 回复图片
                 # res_json = self.taobao.upload_media(r"D:\Desktop\1.png")
@@ -366,10 +370,10 @@ if __name__ == '__main__':
     # asyncio.run(taobaoLive.send_msg_once(goods_url, make_image(image_object["fileId"], image_object["url"], image_object["size"], width, height)))
 
     # 2 获取全部聊天记录
-    cid = '3888777108.1-2221755722770.1#11001'
-    all_messages = asyncio.run(taobaoLive.list_all_conversations(cid))
-    for message in all_messages:
-        print(message)
+    # cid = '3888777108.1-2221755722770.1#11001'
+    # all_messages = asyncio.run(taobaoLive.list_all_conversations(cid))
+    # for message in all_messages:
+    #     print(message)
 
     # 3 常驻进程 用于接收消息和自动回复
-    # asyncio.run(taobaoLive.main())
+    asyncio.run(taobaoLive.main())
