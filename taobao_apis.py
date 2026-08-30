@@ -18,9 +18,6 @@ class TaobaoApis:
     def __init__(self, cookies, device_id):
         self.login_url = 'https://h5api.m.taobao.com/h5/mtop.taobao.login.token.get.h5/2.0/'
         self.upload_media_url = 'https://stream-upload.taobao.com/api/upload.api'
-        self.refresh_token_url = 'https://h5api.m.goofish.com/h5/mtop.taobao.idlemessage.pc.loginuser.get/1.0/'
-        self.item_detail_url = 'https://h5api.m.goofish.com/h5/mtop.taobao.idle.pc.detail/1.0/'
-        self.reset_login_info_url = 'https://passport.goofish.com/newlogin/hasLogin.do'
         self.session = requests.Session()
         self.session.cookies.update(cookies)
         self.device_id = device_id
